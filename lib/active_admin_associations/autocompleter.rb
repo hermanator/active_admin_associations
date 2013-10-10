@@ -15,14 +15,14 @@ module ActiveAdminAssociations
     end
 
     module AutocompleteMethods
-      def autocomplete_results(query)
-        results = where("LOWER(#{table_name}.#{autocomplete_attribute}) LIKE ?", "#{query.downcase}%").
-          order("#{table_name}.#{autocomplete_attribute} ASC")
+      def autocomplete_results(query, site_id)
+        results = where("#{table_name}.site_id = ?", site_id).with_translations.where("LOWER(#{translations_table_name}.#{autocomplete_attribute}) LIKE ?", "#{query.downcase}%").
+          order("#{translations_table_name}.#{autocomplete_attribute} ASC")
         results.map do |record|
           _autocomplete_format_result(record)
         end
       end
-      
+
       private
       
       def _autocomplete_format_result(record)

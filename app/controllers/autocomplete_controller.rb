@@ -10,7 +10,7 @@ class AutocompleteController < ApplicationController
   private
   
   def autocomplete_results
-    query_term.present? ? model.autocomplete_results(query_term) : []
+    query_term.present? ? model.autocomplete_results(query_term, @site_id) : []
   end
   
   def model
