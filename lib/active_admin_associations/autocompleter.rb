@@ -22,9 +22,9 @@ module ActiveAdminAssociations
           _autocomplete_format_result(record)
         end
       end
-      
+
       private
-      
+
       def _autocomplete_format_result(record)
         if configured_autocomplete_result_formatter?
           aa_associations_config.autocomplete_result_formatter.call(record,
@@ -32,11 +32,11 @@ module ActiveAdminAssociations
         else
           label = _format_autocomplete_label(record)
           {"label"  => label, # This plays nice with both jQuery UI autocomplete and jquery.tokeninput
-            "value" => record.send(autocomplete_attribute), 
+            "value" => record.send(autocomplete_attribute).to_s,
             "id"    => record.id}
         end
       end
-      
+
       def _format_autocomplete_label(record)
         if autocomplete_options[:format_label].present?
           if autocomplete_options[:format_label].is_a?(Symbol)
@@ -50,12 +50,12 @@ module ActiveAdminAssociations
           record.send(autocomplete_attribute)
         end
       end
-      
+
       def configured_autocomplete_result_formatter?
         aa_associations_config.autocomplete_result_formatter.present? &&
           aa_associations_config.autocomplete_result_formatter.respond_to?(:call)
       end
-      
+
       def aa_associations_config
         Rails.application.config.aa_associations
       end
