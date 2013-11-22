@@ -4,11 +4,11 @@ module ActiveAdmin
     attr_accessor :form_associations
     attr_accessor :active_association_form
   end
-  
+
   class << self
     def resources
-      application.namespaces.values.map{|n| 
-        n.resources.resources
+      application.namespaces.values.map{|n|
+        n.resources.values
       }.flatten.compact.select{|r|
         r.class == ActiveAdmin::Resource
       }.map(&:resource_class)

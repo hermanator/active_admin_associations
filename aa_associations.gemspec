@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.extra_rdoc_files = ["README.md", "MIT_LICENSE.txt"]
 
-  s.add_dependency 'activeadmin', '~> 0.5'
-  s.add_dependency 'rails', '~> 3.1'
+  s.add_dependency 'activeadmin'
+  s.add_dependency 'rails', '~> 4.0.1'
 
   s.add_development_dependency 'shoulda'
   s.add_development_dependency 'sqlite3'
