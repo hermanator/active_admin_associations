@@ -15,13 +15,22 @@ module ActiveAdminAssociations
 
       member_action :relate, :method => :put do
         reflection = resource_class.reflect_on_association(params[:relationship_name].to_sym)
+
         if reflection.collection?
-          record_to_relate = reflection.klass.find(params[:related_id])
-          resource.send(params[:relationship_name]) << record_to_relate
+          record_to_relate = reflection.klass.where(id: params[:related_id]).first
+
+          if record_to_relate
+            resource.send(params[:relationship_name]) << record_to_relate
+            flash[:notice] = 'The recored has been related.'
+          else
+            flash[:error] = 'Record not found.'
+          end
+
         else
           resource.update_attribute("#{params[:relationship_name]}_id", record_to_relate)
+          flash[:notice] = 'The recored has been related.'
         end
-        flash[:notice] = "The recored has been related."
+
         redirect_to request.headers["Referer"].presence || admin_dashboard_url
       end
 
